@@ -1,3 +1,9 @@
+=== 3.4.1+nimbis.1 (2016-10-20) ===
+
+* Fixed a bug where the placeholder tag would render as None when a
+  non-CMS view was using a template with this tag. See the upstream PR
+  that I've created here: https://github.com/divio/django-cms/pull/5734
+
 === 3.4.1 (2016-10-04) ===
 
 * Fixed a regression when static placeholder was uneditable if it was present
