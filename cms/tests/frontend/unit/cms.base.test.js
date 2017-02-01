@@ -37,7 +37,7 @@ describe('cms.base.js', function () {
         it('exists', function () {
             expect(CMS.API.Helpers).toEqual(jasmine.any(Object));
             // this expectation is here so no one ever forgets to add a test
-            expect(Object.keys(CMS.API.Helpers).length).toEqual(19);
+            expect(Object.keys(CMS.API.Helpers).length).toEqual(20);
         });
 
         describe('.reloadBrowser()', function () {
@@ -1100,6 +1100,20 @@ describe('cms.base.js', function () {
         describe('._getWindow()', function () {
             it('returns window', function () {
                 expect(CMS.API.Helpers._getWindow()).toEqual(window);
+            });
+        });
+
+        describe('.updateUrlWithPath()', function () {
+            it('supports query strings', function () {
+                spyOn(CMS.API.Helpers, '_getWindow').and.returnValue({
+                    location: {
+                        pathname: '/de/',
+                        search: '?language=en'
+                    }
+                });
+
+                expect(CMS.API.Helpers.updateUrlWithPath('/'))
+                    .toEqual('/?cms_path=%2Fde%2F%3Flanguage%3Den');
             });
         });
     });

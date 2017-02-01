@@ -903,7 +903,9 @@ describe('CMS.Toolbar', function () {
             });
             fakeWindow = {
                 location: {
-                    href: ''
+                    href: '',
+                    pathname: '/context.html',
+                    search: ''
                 }
             };
             spyOn(CMS.Navigation.prototype, 'initialize').and.callFake(function () {
@@ -946,7 +948,7 @@ describe('CMS.Toolbar', function () {
             toolbar._delegate($('<div href="href" data-name="modal" data-rel="modal" data-on-close="test"></div>'));
 
             expect(modalOpen).toHaveBeenCalledWith({
-                url: 'href',
+                url: 'href?cms_path=%2Fcontext.html',
                 title: 'modal'
             });
         });

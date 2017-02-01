@@ -444,7 +444,7 @@ class PageToolbar(CMSToolbar):
             if copy:
                 copy_plugins_menu = language_menu.get_or_create_menu('{0}-copy'.format(LANGUAGE_MENU_IDENTIFIER), _('Copy all plugins'))
                 title = _('from %s')
-                question = _('Are you sure you want copy all plugins from %s?')
+                question = _('Are you sure you want to copy all plugins from %s?')
                 page_copy_url = admin_reverse('cms_page_copy_language', args=(self.page.pk,))
                 for code, name in copy:
                     copy_plugins_menu.add_ajax_item(
@@ -606,6 +606,21 @@ class PageToolbar(CMSToolbar):
                     disabled=not edit_mode or not user_can_publish,
                     on_success=refresh,
                 )
+
+            # revert to live
+            current_page_menu.add_break(PAGE_MENU_FOURTH_BREAK)
+            revert_action = admin_reverse('cms_page_revert_to_live', args=(self.page.pk, self.current_lang))
+            revert_question = _('Are you sure you want to revert to live?')
+            # Only show this action if the page has pending changes and a public version
+            is_enabled = self.page.is_dirty(self.current_lang) and self.page.publisher_public
+            current_page_menu.add_ajax_item(
+                _('Revert to live'),
+                action=revert_action,
+                question=revert_question,
+                disabled=not is_enabled,
+                on_success=refresh,
+                extra_classes=('cms-toolbar-revert',),
+            )
 
             # last break
             current_page_menu.add_break(PAGE_MENU_LAST_BREAK)
